@@ -3,31 +3,82 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+	--foreground-rgb: 0, 0, 0;
+	--background-start-rgb: 214, 219, 220;
+	--background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+	:root {
+		--foreground-rgb: 255, 255, 255;
+		--background-start-rgb: 0, 0, 0;
+		--background-end-rgb: 0, 0, 0;
+	}
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+input,
+select {
+	font-size: 0.75rem;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+@media (min-width: 768px) {
+	input,
+	select {
+		font-size: 1rem;
+	}
+}
+
+select,
+button {
+	cursor: pointer;
+	padding: 12px 36px 12px 12px;
+	width: 100%;
+	background-color: #fff;
+	border-radius: 8px;
+	border: 1px solid #e0e0e0;
+	font-weight: 600;
+	color: #000;
+}
+
+.custom-select {
+	position: relative;
+}
+
+.custom-select::before {
+	content: url("https://www.mioto.vn/static/media/arrow-down.d8b3609e.svg");
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	width: 24px;
+	height: 24px;
+	pointer-events: none;
+}
+
+input {
+	padding: 12px 36px 12px 12px;
+	width: 100%;
+	background-color: #fff;
+	border-radius: 8px;
+	border: 1px solid #e0e0e0;
+	font-weight: 600;
+	color: #000;
+}
+
+input.error {
+	border-color: red;
+}
+
+input.error::placeholder {
+	color: red;
+	opacity: 0.5;
+}
+
+input.error::-ms-input-placeholder {
+	color: red;
+	opacity: 0.5;
+}
+
+button {
+	color: #fff;
+	background-color: #5fcf86;
 }
