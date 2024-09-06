@@ -28,8 +28,13 @@ const QR = () => {
 		} else {
 			const amount = ip_amount ? `amount=${ip_amount}` : "";
 			const description = ip_description ? `addInfo=${ip_description}` : "";
-			setImg(`https://img.vietqr.io/image/${ip_bankName}-${ip_accountNumber}-qr_only.jpg?${amount}&${description}`);
+			setImg(`https://img.vietqr.io/image/${ip_bankName}-${ip_accountNumber}-print.jpg?${amount}&${description}`);
 		}
+	};
+
+	const onDefault = () => {
+		setBankName("970422");
+		setAccountNumber("0333829762");
 	};
 
 	const handleBankNameChange = (e: any) => {
@@ -54,7 +59,7 @@ const QR = () => {
 	return (
 		<main className="flex flex-col gap-4 justify-center">
 			<div className="custom-select">
-				<select onChange={handleBankNameChange} className="appearance-none">
+				<select onChange={handleBankNameChange} className="appearance-none" value={ip_bankName}>
 					{banks?.map((bank: any) => (
 						<option key={bank.bin} value={bank.bin}>
 							{bank.shortName} - {bank.name}
@@ -72,6 +77,9 @@ const QR = () => {
 			/>
 			<input type="number" placeholder="Số tiền" value={ip_amount} onChange={handleAmountChange} />
 			<input type="text" placeholder="Lời nhắn" value={ip_description} onChange={handleDescriptionChange} />
+			<button className="default" onClick={onDefault}>
+				MB - 0333829762
+			</button>
 			<button onClick={onGenerate}>Tạo mã</button>
 			{img && (
 				<div className="flex justify-center">

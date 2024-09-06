@@ -81,4 +81,11 @@ input.error::-ms-input-placeholder {
 button {
 	color: #fff;
 	background-color: #5fcf86;
+	border-color: #5fcf86;
+}
+
+button.default {
+	color: #5fcf86;
+	background-color: transparent;
+	border-color: #5fcf86;
 }
