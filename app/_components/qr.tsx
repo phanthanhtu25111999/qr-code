@@ -34,6 +34,13 @@ const MY_BANKS = [
 		shortName: "TPBank",
 	},
 	{
+		id: 5,
+		bin: "970436",
+		accountNumber: "9973982516",
+		accountName: "NGO THANH THI",
+		shortName: "VCB - MUA BÁN PREMIUM",
+	},
+	{
 		id: 0,
 		shortName: "None",
 		accountNumber: "Tùy chỉnh",
