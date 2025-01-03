@@ -13,6 +13,13 @@ const MY_BANKS = [
 		shortName: "MBBank",
 	},
 	{
+		id: 6,
+		bin: "970436",
+		accountNumber: "1053414565",
+		accountName: "PHAN THANH TU",
+		shortName: "VCB",
+	},
+	{
 		id: 2,
 		bin: "970403",
 		accountNumber: "060286834895",
