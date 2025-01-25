@@ -20,6 +20,13 @@ const MY_BANKS = [
 		shortName: "VCB",
 	},
 	{
+		id: 7,
+		bin: "971005",
+		accountNumber: "9704229200871517594",
+		accountName: "PHAN THANH TU",
+		shortName: "Viettel Money",
+	},
+	{
 		id: 2,
 		bin: "970403",
 		accountNumber: "060286834895",
@@ -39,6 +46,13 @@ const MY_BANKS = [
 		accountNumber: "00006480830",
 		accountName: "PHAN THANH TU",
 		shortName: "TPBank",
+	},
+	{
+		id: 8,
+		bin: "970432",
+		accountNumber: "01MMTTT0059790857",
+		accountName: "MOMO - PHAN THANH TU",
+		shortName: "Túi Thần Tài",
 	},
 	{
 		id: 5,
