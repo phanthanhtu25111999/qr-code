@@ -55,6 +55,20 @@ const MY_BANKS = [
 		shortName: "Túi Thần Tài",
 	},
 	{
+		id: 9,
+		bin: "970423",
+		accountNumber: "30584119073",
+		accountName: "BIEN THUY TRUC",
+		shortName: "TPBank - THUY TRUC",
+	},
+	{
+		id: 10,
+		bin: "963388",
+		accountNumber: "9021641958460",
+		accountName: "BIEN THUY TRUC",
+		shortName: "TIMO - THUY TRUC",
+	},
+	{
 		id: 5,
 		bin: "970436",
 		accountNumber: "9973982516",
