@@ -1,6 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
 import { getBanks } from "./api";
 import Image from "next/image";
 
@@ -92,6 +100,8 @@ const QR = () => {
 	const [ip_description, setDescription] = useState("");
 	const [img, setImg] = useState("");
 	const [error, setError] = useState(false);
+	const [openListBanks, setOpenListBanks] = useState(false);
+	const [openMyBanks, setOpenMyBanks] = useState(false);
 
 	useEffect(() => {
 		getBanks().then((data) => {
@@ -114,17 +124,17 @@ const QR = () => {
 		}
 	};
 
-	const handleBankBinChange = (e: any) => {
-		setBankBin(e.target.value);
+	const handleBankBin = (value: string) => {
+		setBankBin(value);
 		setId(0);
 		setAccountNumber("");
 		setAccountName("");
 	};
 
-	const handleBankOptionChange = (e: any) => {
-		setId(+e.target.value);
-		if (+e.target.value !== 0) {
-			const bank = MY_BANKS.find((b) => b.id === +e.target.value);
+	const handleBankOptionChange = (id: number) => {
+		setId(id);
+		if (id !== 0) {
+			const bank = MY_BANKS.find((b) => b.id === id);
 			setBankBin(bank?.bin || "");
 			setAccountName(bank?.accountName || "");
 			setAccountNumber(bank?.accountNumber || "");
@@ -151,37 +161,92 @@ const QR = () => {
 		setDescription(e.target.value);
 	};
 
+	const currentBank = banks?.find((bank) => bank.bin === ip_bankBin);
+	const currentMyBank = MY_BANKS.find((bank) => bank.id === ip_id);
+
 	return (
-		<main className="flex flex-col gap-4 justify-center">
-			<div className="custom-select">
-				<select onChange={handleBankOptionChange} className="appearance-none" value={ip_id}>
-					{MY_BANKS.map((bank) => (
-						<option key={bank.id} value={bank.id}>
-							{bank.shortName} - {bank.accountNumber}
-						</option>
-					))}
-				</select>
-			</div>
-			<div className="custom-select">
-				<select onChange={handleBankBinChange} className="appearance-none" value={ip_bankBin}>
-					{banks?.map((bank: any) => (
-						<option key={bank.bin} value={bank.bin}>
-							{bank.shortName} - {bank.name}
-						</option>
-					))}
-				</select>
-			</div>
-			<input
+		<main className="flex p-4 md:p-20 flex-col gap-4 justify-center">
+			<Popover open={openMyBanks} onOpenChange={setOpenMyBanks}>
+				<PopoverTrigger asChild>
+					<Button
+						variant="outline"
+						role="combobox"
+						aria-expanded={openMyBanks}
+						className="truncate w-full justify-between">
+						{currentMyBank?.shortName} - {currentMyBank?.accountNumber}
+						<ChevronsUpDown className="opacity-50" />
+					</Button>
+				</PopoverTrigger>
+				<PopoverContent align="start" className="w-[--radix-popover-trigger-width] p-0">
+					<Command>
+						<CommandInput placeholder="Search bank..." className="h-9" />
+						<CommandList>
+							<CommandEmpty>No bank found.</CommandEmpty>
+							<CommandGroup>
+								{MY_BANKS.map((bank) => (
+									<CommandItem
+										key={bank.id}
+										value={`${bank.accountNumber} ${bank.shortName}`}
+										onSelect={() => {
+											handleBankOptionChange(bank.id);
+											setOpenMyBanks(false);
+										}}>
+										{bank.shortName} - {bank.accountNumber}
+										<Check className={cn("ml-auto", ip_id === bank.id ? "opacity-100" : "opacity-0")} />
+									</CommandItem>
+								))}
+							</CommandGroup>
+						</CommandList>
+					</Command>
+				</PopoverContent>
+			</Popover>
+
+			<Popover open={openListBanks} onOpenChange={setOpenListBanks}>
+				<PopoverTrigger asChild>
+					<Button
+						variant="outline"
+						role="combobox"
+						aria-expanded={openListBanks}
+						className="truncate w-full justify-between">
+						{ip_bankBin ? `${currentBank?.shortName} - ${currentBank?.name}` : "Select bank..."}
+						<ChevronsUpDown className="opacity-50" />
+					</Button>
+				</PopoverTrigger>
+				<PopoverContent align="start" className="w-[--radix-popover-trigger-width] p-0">
+					<Command>
+						<CommandInput placeholder="Search bank..." className="h-9" />
+						<CommandList>
+							<CommandEmpty>No bank found.</CommandEmpty>
+							<CommandGroup>
+								{banks.map((bank) => (
+									<CommandItem
+										key={bank.bin}
+										value={`${bank.name} ${bank.shortName}`}
+										onSelect={() => {
+											handleBankBin(bank.bin);
+											setOpenListBanks(false);
+										}}>
+										{bank.shortName} - {bank.name}
+										<Check className={cn("ml-auto", ip_bankBin === bank.bin ? "opacity-100" : "opacity-0")} />
+									</CommandItem>
+								))}
+							</CommandGroup>
+						</CommandList>
+					</Command>
+				</PopoverContent>
+			</Popover>
+			<Input
 				autoFocus
-				className={error ? "error" : ""}
+				className={error ? "border-red-500" : ""}
 				type="text"
 				placeholder="STK"
 				value={ip_accountNumber}
 				onChange={handleAccountNumberChange}
 			/>
-			<input type="number" placeholder="Số tiền" value={ip_amount} onChange={handleAmountChange} />
-			<input type="text" placeholder="Lời nhắn" value={ip_description} onChange={handleDescriptionChange} />
-			<button onClick={onGenerate}>Tạo mã</button>
+			<Input type="number" placeholder="Số tiền" value={ip_amount} onChange={handleAmountChange} />
+			<Input type="text" placeholder="Lời nhắn" value={ip_description} onChange={handleDescriptionChange} />
+
+			<Button onClick={onGenerate}>Tạo mã</Button>
 			{img && (
 				<div className="flex justify-center">
 					<Image src={img} width={500} height={500} alt="QR CODE" />
