@@ -91,7 +91,7 @@ const MY_BANKS = [
 ];
 
 const QR = () => {
-	const [banks, setBanks] = useState([]);
+	const [banks, setBanks] = useState<any[]>([]);
 	const [ip_id, setId] = useState(1);
 	const [ip_bankBin, setBankBin] = useState(MY_BANKS[0].bin);
 	const [ip_accountNumber, setAccountNumber] = useState(MY_BANKS[0].accountNumber);
