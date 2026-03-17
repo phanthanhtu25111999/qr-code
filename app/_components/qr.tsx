@@ -14,18 +14,25 @@ import Image from "next/image";
 
 const MY_BANKS = [
 	{
-		id: 1,
-		bin: "970422",
-		accountNumber: "0333829762",
-		accountName: "PHAN THANH TU",
-		shortName: "MBBank",
-	},
-	{
 		id: 6,
 		bin: "970436",
 		accountNumber: "1053414565",
 		accountName: "PHAN THANH TU",
 		shortName: "VCB",
+	},
+	{
+		id: 3,
+		bin: "970407",
+		accountNumber: "7425111999",
+		accountName: "PHAN THANH TU",
+		shortName: "Techcombank",
+	},
+	{
+		id: 1,
+		bin: "970422",
+		accountNumber: "0333829762",
+		accountName: "PHAN THANH TU",
+		shortName: "MBBank",
 	},
 	{
 		id: 7,
@@ -40,13 +47,6 @@ const MY_BANKS = [
 		accountNumber: "060286834895",
 		accountName: "PHAN THANH TU",
 		shortName: "Sacombank",
-	},
-	{
-		id: 3,
-		bin: "970407",
-		accountNumber: "19072590042015",
-		accountName: "PHAN THANH TU",
-		shortName: "Techcombank",
 	},
 	{
 		id: 4,
@@ -92,7 +92,7 @@ const MY_BANKS = [
 
 const QR = () => {
 	const [banks, setBanks] = useState<any[]>([]);
-	const [ip_id, setId] = useState(1);
+	const [ip_id, setId] = useState(MY_BANKS[0].id);
 	const [ip_bankBin, setBankBin] = useState(MY_BANKS[0].bin);
 	const [ip_accountNumber, setAccountNumber] = useState(MY_BANKS[0].accountNumber);
 	const [ip_accountName, setAccountName] = useState(MY_BANKS[0].accountName);
@@ -119,7 +119,7 @@ const QR = () => {
 			const description = ip_description ? `addInfo=${ip_description}` : "";
 			const name = ip_accountName ? `accountName=${ip_accountName}` : "";
 			setImg(
-				`https://img.vietqr.io/image/${ip_bankBin}-${ip_accountNumber}-print.jpg?${amount}&${description}&${name}`
+				`https://img.vietqr.io/image/${ip_bankBin}-${ip_accountNumber}-print.jpg?${amount}&${description}&${name}`,
 			);
 		}
 	};
