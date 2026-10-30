@@ -119,7 +119,7 @@ const QR = () => {
 			const description = ip_description ? `addInfo=${ip_description}` : "";
 			const name = ip_accountName ? `accountName=${ip_accountName}` : "";
 			setImg(
-				`https://img.vietqr.io/image/${ip_bankBin}-${ip_accountNumber}-print.jpg?${amount}&${description}&${name}`,
+				`https://img.vietqr.io/image/${ip_bankBin}-${ip_accountNumber}-print.svg?${amount}&${description}&${name}`,
 			);
 		}
 	};
@@ -249,7 +249,7 @@ const QR = () => {
 			<Button onClick={onGenerate}>Tạo mã</Button>
 			{img && (
 				<div className="flex justify-center">
-					<Image src={img} width={500} height={500} alt="QR CODE" />
+					<Image src={img} width={500} height={500} alt="QR CODE" unoptimized />
 				</div>
 			)}
 		</main>
